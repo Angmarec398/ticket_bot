@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p {{ secrets.SERVER_PORT }} ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Debug SSH key
         run: |
@@ -28,15 +28,15 @@ jobs:
 
       - name: Create directory on server
         run: |
-          ssh -i ~/.ssh/id_rsa -p {{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'mkdir -p ~/home/ticket_bot'
+          ssh -i ~/.ssh/id_rsa -p ${{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'mkdir -p ~/home/ticket_bot'
 
       - name: Copy files via SSH
         run: |
-          scp -i ~/.ssh/id_rsa -P {{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no -r ./* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/home/ticket_bot/
+          scp -i ~/.ssh/id_rsa -P ${{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no -r ./* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/home/ticket_bot/
 
       - name: SSH into server and build Docker image
         run: |
-          ssh -i ~/.ssh/id_rsa -p {{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa -p ${{ secrets.SERVER_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
             sudo apt update
             sudo apt install -y docker.io
             sudo systemctl start docker
