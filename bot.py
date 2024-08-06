@@ -21,7 +21,8 @@ router = Router()
 
 @router.message(Command(commands=['start', 'help']))
 async def send_welcome(message: Message):
-    await message.answer("Привет. Это бот создан для оповещений по обращениям в компанию ЦИФРАЗ")
+    chat_id = message.chat.id
+    await message.answer(f"Привет. Это бот создан для оповещений по обращениям в компанию ЦИФРАЗ. Ваш ID: {chat_id}")
 
 
 @router.message(F.text)
