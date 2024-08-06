@@ -3,8 +3,12 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram import Router
+import os
+from dotenv import load_dotenv
 
-API_TOKEN = '7124589057:AAEthjxStgrritt2hE2CqLGy5ZlGV0wFk3Q'
+load_dotenv()
+
+API_TOKEN = os.getenv('API_TOKEN')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
